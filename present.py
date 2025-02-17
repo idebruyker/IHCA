@@ -74,6 +74,8 @@ for root, dirs, files in os.walk(base_directory):
         ax2.set_yticklabels(ax2.get_yticklabels(), rotation=90, fontsize=4, va='center')
         ax2.legend(handles=[plt.Line2D([], [], color='gray', marker='o', label='MHC II+')], fontsize=8)
         ############### plot 4 ####################################################################################################################
+        # total
+        total_count = data.shape[0]
         #  cd8 = 10
         data_cd8 = pd.concat([data[data['Predictions'] == 10],data[data['Predictions'] == 40],data[data['Predictions'] == 50],data[data['Predictions'] == 60]],ignore_index=True)
         cd8_max_x = data['Centroid.X.µm'].max() 
@@ -83,6 +85,7 @@ for root, dirs, files in os.walk(base_directory):
         cd8_area = ((cd8_max_x - cd8_min_x) * (cd8_max_y - cd8_min_y))  // 10000  # convert to mm^2
         cd8_count = data_cd8.shape[0]
         cd8_mm2 = cd8_count / cd8_area
+        cd8_DAPI = cd8_count / total_count
 
          #  mhcII = 30
         data_mhcII = data[data['Predictions'] == 30]
@@ -93,6 +96,7 @@ for root, dirs, files in os.walk(base_directory):
         mhcII_area = ((mhcII_max_x - mhcII_min_x) * (mhcII_max_y - mhcII_min_y))  // 10000  # convert to mm^2
         mhcII_count = data_mhcII.shape[0]
         mhcII_mm2 = mhcII_count / mhcII_area
+        mhcII_DAPI = mhcII_count / total_count
 
          #  cd4 = 20
         data_cd4 = data[data['Predictions'] == 30]
@@ -103,6 +107,7 @@ for root, dirs, files in os.walk(base_directory):
         cd4_area = ((cd4_max_x - cd4_min_x) * (cd4_max_y - cd4_min_y))  // 10000  # convert to mm^2
         cd4_count = data_cd4.shape[0]
         cd4_mm2 = cd4_count / cd4_area
+        cd4_DAPI = cd4_count / total_count
 
          #  tcf = 60,50
         data_tcf = pd.concat([data[data['Predictions'] == 60],data[data['Predictions'] == 50]],ignore_index=True)
@@ -113,6 +118,7 @@ for root, dirs, files in os.walk(base_directory):
         tcf_area = ((tcf_max_x - tcf_min_x) * (tcf_max_y - tcf_min_y))  // 10000  # convert to mm^2
         tcf_count = data_tcf.shape[0]
         tcf_mm2 = tcf_count / tcf_area
+        tcf_DAPI = tcf_count / total_count
 
          #  pd1 = 40,50
         data_pd1 = pd.concat([data[data['Predictions'] == 40],data[data['Predictions'] == 50]],ignore_index=True)
@@ -123,6 +129,7 @@ for root, dirs, files in os.walk(base_directory):
         pd1_area = ((pd1_max_x - pd1_min_x) * (pd1_max_y - pd1_min_y))  // 10000  # convert to mm^2
         pd1_count = data_pd1.shape[0]
         pd1_mm2 = pd1_count / pd1_area
+        pd1_DAPI = pd1_count / total_count
 
          #  pd1tcf = 50
         data_pd1tcf = data[data['Predictions'] == 30]
@@ -133,27 +140,34 @@ for root, dirs, files in os.walk(base_directory):
         pd1tcf_area = ((pd1tcf_max_x - pd1tcf_min_x) * (pd1tcf_max_y - pd1tcf_min_y))  // 10000  # convert to mm^2
         pd1tcf_count = data_pd1tcf.shape[0]
         pd1tcf_mm2 = pd1tcf_count / pd1tcf_area
+        pd1tcf_DAPI = pd1tcf_count / total_count
 
         numbers_table = pd.DataFrame({
             'Sample': [sample_title],
             'CD8 area': [cd8_area],
             'CD8 count': [cd8_count],
             'CD8 per mm2': [cd8_mm2],
+            'CD8 per DAPI': [cd8_DAPI],
             'MHCII area': [mhcII_area],
             'MHCII count': [mhcII_count],
             'MHCII per mm2': [mhcII_mm2],
+            'MHCII per DAPI': [mhcII_DAPI],
             'CD4 area': [cd4_area],
             'CD4 count': [cd4_count],
             'CD4 per mm2': [cd4_mm2],
+            'CD4 per DAPI': [cd4_DAPI],
             'TCF area': [tcf_area],
             'TCF count': [tcf_count],
             'TCF per mm2': [tcf_mm2],
+            'TCF per DAPI': [tcf_DAPI],
             'PD1 area': [pd1_area],
             'PD1 count': [pd1_count],
             'PD1 per mm2': [pd1_mm2],
+            'PD1 per DAPI': [pd1_DAPI],
             'PD1TCF area': [pd1tcf_area],
             'PD1TCF count': [pd1tcf_count],
-            'PD1TCF per mm2': [pd1tcf_mm2]})
+            'PD1TCF per mm2': [pd1tcf_mm2],
+            'PDTCF per DAPI': [pd1tcf_DAPI]})
         
         numbers_table.to_csv(f"./numbers/{sample_title}_numbers.csv", index=False)
 
