@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
 
 base_directory = "./predictions"
 # Using os.walk
@@ -41,15 +42,16 @@ for root, dirs, files in os.walk(base_directory):
         # create grid
         fig = plt.figure(layout=None, figsize=(30,11)) 
         # fig = plt.rcParams.update({'font.size': 20})
-        gs = fig.add_gridspec(nrows=2, ncols=3, hspace=0.2, wspace=0.2, left=0.05, right=0.95, top=0.95, bottom=0.05)
+        # gs = fig.add_gridspec(nrows=3, ncols=3, hspace=0.2, wspace=0.2, left=0.05, right=0.95, top=0.95, bottom=0.05)
+        gs = gridspec.GridSpec(3,3, width_ratios=[1,1,1], height_ratios=[6,1,1]) # 3 rows, 3 columns
         ax0 = fig.add_subplot(gs[0, 0])
         ax1 = fig.add_subplot(gs[0, 1])
         ax2 = fig.add_subplot(gs[0, 2])
         ax3 = fig.add_subplot(gs[1, :])
+        ax4 = fig.add_subplot(gs[2, :])
 
         ############### plot 1 ####################################################################################################################
         ax0.scatter(data_plot1['Centroid.X.µm'], data_plot1['Centroid.Y.µm']*(-1), s=4/100, c=colors_plot1, marker='.')
-        # ax0.set_title(sample_title, fontsize=30,color='red', fontweight='bold',loc='left')  # Add title to the first subplot
         ax0.set_xlabel("Centroid X µm", fontsize=10)
         ax0.set_xticklabels(ax0.get_xticklabels(), fontsize=4, va='center')
         ax0.set_ylabel("Centroid Y µm", fontsize=10)
@@ -58,6 +60,7 @@ for root, dirs, files in os.walk(base_directory):
                             plt.Line2D([], [], color='red', marker='o', label='CD8+PD1+TCF- Cells'),
                             plt.Line2D([], [], color='#39FF14', marker='o', label='CD8+PD1+TCF+ Cells')],
                             fontsize=8)
+        ax0.set_box_aspect(1)
         ############### plot 2 ####################################################################################################################
         ax1.scatter(data_plot2['Centroid.X.µm'], data_plot2['Centroid.Y.µm']*(-1), s=4/100,c=colors_plot2, marker='.')
         ax1.set_xlabel("Centroid X µm", fontsize=10)
@@ -65,6 +68,7 @@ for root, dirs, files in os.walk(base_directory):
         ax1.set_ylabel("Centroid Y µm", fontsize=10)
         ax1.set_yticklabels(ax1.get_yticklabels(), rotation=90, fontsize=4, va='center')
         ax1.legend(handles=[plt.Line2D([], [], color='gray', marker='o', label='MHC II+')], fontsize=8)
+        ax1.set_box_aspect(1)
         ############### plot 3 ####################################################################################################################
         
         ax2.scatter(data_plot2['Centroid.X.µm'], data_plot2['Centroid.Y.µm']*(-1), s=4/100,c=colors_plot2, marker='.')
@@ -73,9 +77,16 @@ for root, dirs, files in os.walk(base_directory):
         ax2.set_ylabel("Centroid Y µm", fontsize=10)
         ax2.set_yticklabels(ax2.get_yticklabels(), rotation=90, fontsize=4, va='center')
         ax2.legend(handles=[plt.Line2D([], [], color='gray', marker='o', label='MHC II+')], fontsize=8)
+        ax2.set_box_aspect(1)
         ############### plot 4 ####################################################################################################################
         # total
+        total_max_x = data['Centroid.X.µm'].max() 
+        total_min_x = data['Centroid.X.µm'].min()
+        total_max_y = data['Centroid.Y.µm'].max() 
+        total_min_y = data['Centroid.Y.µm'].min() 
+        total_area = ((total_max_x - total_min_x) * (total_max_y - total_min_y))  // 10000  # convert to mm^2
         total_count = data.shape[0]
+        
         #  cd8 = 10
         data_cd8 = pd.concat([data[data['Predictions'] == 10],data[data['Predictions'] == 40],data[data['Predictions'] == 50],data[data['Predictions'] == 60]],ignore_index=True)
         cd8_max_x = data['Centroid.X.µm'].max() 
@@ -120,6 +131,17 @@ for root, dirs, files in os.walk(base_directory):
         tcf_mm2 = tcf_count / tcf_area
         tcf_DAPI = tcf_count / total_count
 
+         #  tcfneg = xxxxx to do xxxxxxxxxxxxxx
+        data_tcfneg = data[data['Predictions'] == 30] #xxxxx to do xxxxxxxxxxxxxx
+        tcfneg_max_x = data['Centroid.X.µm'].max() 
+        tcfneg_min_x = data['Centroid.X.µm'].min()
+        tcfneg_max_y = data['Centroid.Y.µm'].max() 
+        tcfneg_min_y = data['Centroid.Y.µm'].min() 
+        tcfneg_area = ((tcfneg_max_x - tcfneg_min_x) * (tcfneg_max_y - tcfneg_min_y))  // 10000  # convert to mm^2
+        tcfneg_count = data_tcfneg.shape[0]
+        tcfneg_mm2 = tcfneg_count / tcfneg_area
+        tcfneg_DAPI = tcfneg_count / total_count
+
          #  pd1 = 40,50
         data_pd1 = pd.concat([data[data['Predictions'] == 40],data[data['Predictions'] == 50]],ignore_index=True)
         pd1_max_x = data['Centroid.X.µm'].max() 
@@ -142,6 +164,7 @@ for root, dirs, files in os.walk(base_directory):
         pd1tcf_mm2 = pd1tcf_count / pd1tcf_area
         pd1tcf_DAPI = pd1tcf_count / total_count
 
+        # build numbers table to download
         numbers_table = pd.DataFrame({
             'Sample': [sample_title],
             'CD8 area': [cd8_area],
@@ -160,6 +183,10 @@ for root, dirs, files in os.walk(base_directory):
             'TCF count': [tcf_count],
             'TCF per mm2': [tcf_mm2],
             'TCF per DAPI': [tcf_DAPI],
+            'TCFneg area': [tcfneg_area],
+            'TCFneg count': [tcfneg_count],
+            'TCFneg per mm2': [tcfneg_mm2],
+            'TCFneg per DAPI': [tcfneg_DAPI],
             'PD1 area': [pd1_area],
             'PD1 count': [pd1_count],
             'PD1 per mm2': [pd1_mm2],
@@ -171,15 +198,23 @@ for root, dirs, files in os.walk(base_directory):
         
         numbers_table.to_csv(f"./numbers/{sample_title}_numbers.csv", index=False)
 
-        displaytable = ax3.table(cellText=numbers_table.values, colLabels=numbers_table.columns, cellLoc = 'center', colWidths=[0.05]*len(numbers_table.columns), loc='center')
-        displaytable.set_fontsize(10)  #not working as autosize
+        # build numbers table to display
+        numbers_table_ax3 = numbers_table[numbers_table.columns[1:17]]
+        numbers_table_ax4 = numbers_table[numbers_table.columns[17:34]] #up by 2 once niche fields added
+
+        displaytable_ax3 = ax3.table(cellText=numbers_table_ax3.values, colLabels=numbers_table_ax3.columns, cellLoc = 'center', colWidths=[0.05]*len(numbers_table_ax3.columns), loc='center')
+        displaytable_ax3.set_fontsize(10)  #not working as autosize
         # displaytable.
 
         ax3.axis('off')
-        # ax3.subplots_adjust(left=0.2, right=0.8, top=0.8, bottom=0.2)
 
         ax3.set_title('Numbers/Output Data', fontsize=10,color='red', loc='center')
         
+        displaytable_ax4 = ax4.table(cellText=numbers_table_ax4.values, colLabels=numbers_table_ax4.columns, cellLoc = 'center', colWidths=[0.05]*len(numbers_table_ax4.columns), loc='center')
+        displaytable_ax4.set_fontsize(10)  #not working as autosize
+        # displaytable.
+
+        ax4.axis('off')
         ############### general and show ####################################################################################################################
         fig.suptitle(sample_title, fontsize=20, color='red', fontweight='bold')  # Add title to the figure
 
@@ -187,14 +222,12 @@ for root, dirs, files in os.walk(base_directory):
         plot_png = f"plots/{sample_title}_300dpi.png"
         plt.savefig(plot_png, dpi=300, bbox_inches='tight') #1200 possible
 
-        # plt.show()
+        plt.show()
 
         plt.close()
 
-        exit()
+        # exit()
 
-        # counts
-        counts = data['Predictions'].value_counts()
-        print(counts)
+
 
 
