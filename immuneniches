@@ -1,0 +1,80 @@
+import os
+import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt
+
+import os
+import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt
+
+base_directory = "./predictions"
+# Using os.walk
+for root, dirs, files in os.walk(base_directory):
+    for file in files:
+        sample = file.replace("_predictions.csv", "")
+        print(sample)
+        file_path = os.path.join(root, file)
+        data = pd.read_csv(file_path) 
+       
+        # 10 = CD8
+        # 20 = CD4
+        # 30 = mhcII -> niche
+        # 40 = pd1
+        # 50 = pd1tcf -> niche
+        # 60 = tcf
+
+        # drop cd8, cd4, pd1, tcf
+        data = data[~(data['Predictions'] == 10)] #drop cd8
+        data = data[~(data['Predictions'] == 20)] #drop cd4
+        data = data[~(data['Predictions'] == 40)] #drop pd1
+        data = data[~(data['Predictions'] == 60)] #drop tcf
+
+        # delete columns
+        data.drop('Nucleus..Opal.570.mean', axis=1, inplace=True)
+        data.drop('Nucleus..Opal.690.mean', axis=1, inplace=True)
+        data.drop('Nucleus..Opal.480.mean', axis=1, inplace=True)
+        data.drop('Nucleus..Opal.620.mean', axis=1, inplace=True)
+        data.drop('Nucleus..Opal.520.mean', axis=1, inplace=True)
+
+        # round to nearest 100 nanometers -> mm
+        data['Centroid.X.µm'] = data['Centroid.X.µm'] // 100 * 100
+        data['Centroid.Y.µm'] = data['Centroid.Y.µm'] // 100 * 100
+
+        # max / min X and Y
+        max_x = data['Centroid.X.µm'].max()
+        min_x = data['Centroid.X.µm'].min()
+        step_x = 100
+        max_y = data['Centroid.Y.µm'].max()
+        min_y = data['Centroid.Y.µm'].min()
+        step_y = 100
+
+        # generate x and y values
+        x_values = np.arange(min_x, max_x, 100)
+        y_values = np.arange(min_y, max_y, 100)
+
+        # split data into mhcii and pd1tcf
+        data_mhcii = data[data['Predictions'] == 30]
+        data_pd1tcf = data[data['Predictions'] == 50]
+
+        data_mhcii.drop('Predictions', axis=1, inplace=True)
+        data_pd1tcf.drop('Predictions', axis=1, inplace=True)
+
+        # Merge the two DataFrames on 'x' and 'y'
+        common_coords = pd.merge(data_mhcii, data_pd1tcf, on=['Centroid.X.µm', 'Centroid.Y.µm'], how='inner')
+
+        # Count occurrences of each (x, y) pair
+        common_coords['count'] = common_coords.groupby(['Centroid.X.µm', 'Centroid.Y.µm'])['Centroid.X.µm'].transform('count')
+
+        # Drop duplicates to get unique (x, y) pairs with their counts
+        result = common_coords.drop_duplicates().reset_index(drop=True)
+
+        # create a 2D grid where rows are y and columns are x
+        grid = pd.DataFrame(result, index=y_values, columns=x_values)
+
+        # plot the grid
+        plt.figure(figsize=(15, 10))
+
+        plt.show()
+
+ 
