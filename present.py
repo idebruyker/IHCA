@@ -150,7 +150,7 @@ for root, dirs, files in os.walk(base_directory):
         mhcII_DAPI = mhcII_count / total_count
 
          #  cd4 = 20
-        data_cd4 = data[data['Predictions'] == 30]
+        data_cd4 = data[data['Predictions'] == 20]
         cd4_max_x = data['Centroid.X.µm'].max() 
         cd4_min_x = data['Centroid.X.µm'].min()
         cd4_max_y = data['Centroid.Y.µm'].max() 
@@ -171,8 +171,8 @@ for root, dirs, files in os.walk(base_directory):
         tcf_mm2 = tcf_count / tcf_area
         tcf_DAPI = tcf_count / total_count
 
-         #  tcfneg = xxxxx to do xxxxxxxxxxxxxx
-        data_tcfneg = data[data['Predictions'] == 30] #xxxxx to do xxxxxxxxxxxxxx
+         #  tcfneg = 40
+        data_tcfneg = data[data['Predictions'] == 40] 
         tcfneg_max_x = data['Centroid.X.µm'].max() 
         tcfneg_min_x = data['Centroid.X.µm'].min()
         tcfneg_max_y = data['Centroid.Y.µm'].max() 
@@ -194,7 +194,7 @@ for root, dirs, files in os.walk(base_directory):
         pd1_DAPI = pd1_count / total_count
 
          #  pd1tcf = 50
-        data_pd1tcf = data[data['Predictions'] == 30]
+        data_pd1tcf = data[data['Predictions'] == 50]
         pd1tcf_max_x = data['Centroid.X.µm'].max() 
         pd1tcf_min_x = data['Centroid.X.µm'].min()
         pd1tcf_max_y = data['Centroid.Y.µm'].max() 
