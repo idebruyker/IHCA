@@ -11,9 +11,10 @@ base_directory = "./predictions"
 # Using os.walk
 for root, dirs, files in os.walk(base_directory):
     for file in files:
-        print(os.path.join(root, file))
         file_path = os.path.join(root, file)
         data = pd.read_csv(file_path) 
+
+        print(f'{file_path}: {data.shape[0]}')
      
         sample_title = file_path.split('/')[-1].split('_predictions')[0]
         sample_title = 'Sample ' + sample_title
@@ -26,11 +27,21 @@ for root, dirs, files in os.walk(base_directory):
         # 50 = pd1tcf
         # 60 = tcf
 
-        data_plot1 = data[~(data['Predictions'] == 20)] #drop CD4
-        data_plot1 = data_plot1[~(data['Predictions'] == 30)] #drop MHC II
+        # slices
+        filtered_10 = data[(data['Predictions'] == 10)]
+        filtered_20 = data[(data['Predictions'] == 20)]
+        filtered_30 = data[(data['Predictions'] == 30)]
+        filtered_40 = data[(data['Predictions'] == 40)]
+        filtered_50 = data[(data['Predictions'] == 50)]
+        filtered_60 = data[(data['Predictions'] == 60)]
+
+        # datasets
+        data_plot1 = pd.concat([filtered_10,filtered_40,filtered_50,filtered_60])
+        data_plot1['Predictions'] = data_plot1['Predictions'].replace(40, 10) #replace pd1 with cd8
+        data_plot1['Predictions'] = data_plot1['Predictions'].replace(50, 10) #replace pd1tcf with cd8
         data_plot1['Predictions'] = data_plot1['Predictions'].replace(60, 10) #replace tcf with cd8
 
-        data_plot2 = data[data['Predictions'] == 30] #MHC II+ only
+        data_plot2 = pd.concat([filtered_30])
 
         # Create a dictionary to map types to colors
         color_map_plot1 = {10: 'lightgray', 40: 'red', 50: '#39FF14'}
@@ -70,11 +81,8 @@ for root, dirs, files in os.walk(base_directory):
         ax1.legend(handles=[plt.Line2D([], [], color='gray', marker='o', label='MHC II+')], fontsize=8)
         ax1.set_box_aspect(1)
         ############### plot 3 ####################################################################################################################
-        # drop cd8, cd4, pd1, tcf
-        data_in = data[~(data['Predictions'] == 10)] #drop cd8
-        data_in = data_in[~(data_in['Predictions'] == 20)] #drop cd4
-        data_in = data_in[~(data_in['Predictions'] == 40)] #drop pd1
-        data_in = data_in[~(data_in['Predictions'] == 60)] #drop tcf
+        # only mhcII and pd1tcf
+        data_in = pd.concat([filtered_30, filtered_50])
 
         # delete columns
         data_in.drop('Nucleus..Opal.570.mean', axis=1, inplace=True)
@@ -100,8 +108,8 @@ for root, dirs, files in os.walk(base_directory):
         y_values = np.arange(min_y, max_y, 1) #100
 
         # split data into mhcii and pd1tcf
-        data_mhcii = data_in[data_in['Predictions'] == 30]
-        data_pd1tcf = data_in[data_in['Predictions'] == 50]
+        data_mhcii = data_in[data_in['Predictions'] == 30].copy()
+        data_pd1tcf = data_in[data_in['Predictions'] == 50].copy()
 
         # data_mhcii.drop('Predictions', axis=1, inplace=True)
         # data_pd1tcf.drop('Predictions', axis=1, inplace=True)
@@ -128,7 +136,7 @@ for root, dirs, files in os.walk(base_directory):
         total_count = data.shape[0]
         
         # all cells
-        data_all = data
+        data_all = data.copy()
         # delete columns
         data_all.drop('Nucleus..Opal.570.mean', axis=1, inplace=True)
         data_all.drop('Nucleus..Opal.690.mean', axis=1, inplace=True)
@@ -137,8 +145,8 @@ for root, dirs, files in os.walk(base_directory):
         data_all.drop('Nucleus..Opal.520.mean', axis=1, inplace=True)
 
         # round to nearest 100 nanometers -> mm
-        data_all['Centroid.X.µm'] = data_in['Centroid.X.µm'] // 100 * 1 #100
-        data_all['Centroid.Y.µm'] = data_in['Centroid.Y.µm'] // 100 * 1 #100
+        data_all['Centroid.X.µm'] = data_all['Centroid.X.µm'] // 100 * 1 #100
+        data_all['Centroid.Y.µm'] = data_all['Centroid.Y.µm'] // 100 * 1 #100
         
         # delete duplicates
         data_all = data_all.drop_duplicates()
