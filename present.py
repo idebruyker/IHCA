@@ -1,7 +1,11 @@
 import os
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
+import warnings
+
+warnings.filterwarnings("ignore") # only warnings show for xticlables and yticklabels, but have not effect except for filling up terminal window
 
 base_directory = "./predictions"
 # Using os.walk
@@ -28,20 +32,16 @@ for root, dirs, files in os.walk(base_directory):
 
         data_plot2 = data[data['Predictions'] == 30] #MHC II+ only
 
-        data_plot3 = data[data['Predictions'] == 30] #MHC II+ only  testing
-
         # Create a dictionary to map types to colors
         color_map_plot1 = {10: 'lightgray', 40: 'red', 50: '#39FF14'}
         color_map_plot2 = {30: 'gray'}
-        color_map_plot3 = {30: 'blue'} #testing
+        color_map_plot3 = {30: 'blue'}
 
         colors_plot1 = data_plot1['Predictions'].map(color_map_plot1)
         colors_plot2 = data_plot2['Predictions'].map(color_map_plot2)
-        colors_plot3 = data_plot3['Predictions'].map(color_map_plot3) #testing
 
         # create grid
         fig = plt.figure(layout=None, figsize=(30,11)) 
-        # fig = plt.rcParams.update({'font.size': 20})
         # gs = fig.add_gridspec(nrows=3, ncols=3, hspace=0.2, wspace=0.2, left=0.05, right=0.95, top=0.95, bottom=0.05)
         gs = gridspec.GridSpec(3,3, width_ratios=[1,1,1], height_ratios=[6,1,1]) # 3 rows, 3 columns
         ax0 = fig.add_subplot(gs[0, 0])
@@ -70,14 +70,54 @@ for root, dirs, files in os.walk(base_directory):
         ax1.legend(handles=[plt.Line2D([], [], color='gray', marker='o', label='MHC II+')], fontsize=8)
         ax1.set_box_aspect(1)
         ############### plot 3 ####################################################################################################################
+        # drop cd8, cd4, pd1, tcf
+        data_in = data[~(data['Predictions'] == 10)] #drop cd8
+        data_in = data_in[~(data_in['Predictions'] == 20)] #drop cd4
+        data_in = data_in[~(data_in['Predictions'] == 40)] #drop pd1
+        data_in = data_in[~(data_in['Predictions'] == 60)] #drop tcf
+
+        # delete columns
+        data_in.drop('Nucleus..Opal.570.mean', axis=1, inplace=True)
+        data_in.drop('Nucleus..Opal.690.mean', axis=1, inplace=True)
+        data_in.drop('Nucleus..Opal.480.mean', axis=1, inplace=True)
+        data_in.drop('Nucleus..Opal.620.mean', axis=1, inplace=True)
+        data_in.drop('Nucleus..Opal.520.mean', axis=1, inplace=True)
+
+        # round to nearest 100 nanometers -> mm
+        data_in['Centroid.X.µm'] = data_in['Centroid.X.µm'] // 100 * 100
+        data_in['Centroid.Y.µm'] = data_in['Centroid.Y.µm'] // 100 * 100
+
+        # max / min X and Y
+        max_x = data_in['Centroid.X.µm'].max()
+        min_x = data_in['Centroid.X.µm'].min()
+        step_x = 100
+        max_y = data_in['Centroid.Y.µm'].max()
+        min_y = data_in['Centroid.Y.µm'].min()
+        step_y = 100
+
+        # generate x and y values
+        x_values = np.arange(min_x, max_x, 100)
+        y_values = np.arange(min_y, max_y, 100)
+
+        # split data into mhcii and pd1tcf
+        data_mhcii = data_in[data_in['Predictions'] == 30]
+        data_pd1tcf = data_in[data_in['Predictions'] == 50]
+
+        data_mhcii.drop('Predictions', axis=1, inplace=True)
+        data_pd1tcf.drop('Predictions', axis=1, inplace=True)
         
-        ax2.scatter(data_plot2['Centroid.X.µm'], data_plot2['Centroid.Y.µm']*(-1), s=4/100,c=colors_plot2, marker='.')
+        # Merge the two DataFrames on 'x' and 'y'
+        data_plot3 = pd.merge(data_mhcii, data_pd1tcf, on=['Centroid.X.µm', 'Centroid.Y.µm'], how='inner')
+        
+        # create plot
+        ax2.scatter(data_plot3['Centroid.X.µm'], data_plot3['Centroid.Y.µm']*(-1), s=4/100, marker='.') #c=colors_plot3
         ax2.set_xlabel("Centroid X µm", fontsize=10)
         ax2.set_xticklabels(ax2.get_xticklabels(), fontsize=4, va='center')
         ax2.set_ylabel("Centroid Y µm", fontsize=10)
         ax2.set_yticklabels(ax2.get_yticklabels(), rotation=90, fontsize=4, va='center')
-        ax2.legend(handles=[plt.Line2D([], [], color='gray', marker='o', label='MHC II+')], fontsize=8)
+        ax2.legend(handles=[plt.Line2D([], [], color='blue', marker='o', label='Immune Niches')], fontsize=8)
         ax2.set_box_aspect(1)
+
         ############### plot 4 ####################################################################################################################
         # total
         total_max_x = data['Centroid.X.µm'].max() 
