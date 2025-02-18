@@ -84,8 +84,8 @@ for root, dirs, files in os.walk(base_directory):
         data_in.drop('Nucleus..Opal.520.mean', axis=1, inplace=True)
 
         # round to nearest 100 nanometers -> mm
-        data_in['Centroid.X.µm'] = data_in['Centroid.X.µm'] // 100 * 100
-        data_in['Centroid.Y.µm'] = data_in['Centroid.Y.µm'] // 100 * 100
+        data_in['Centroid.X.µm'] = data_in['Centroid.X.µm'] // 100 * 1 #100
+        data_in['Centroid.Y.µm'] = data_in['Centroid.Y.µm'] // 100 * 1 #100
 
         # max / min X and Y
         max_x = data_in['Centroid.X.µm'].max()
@@ -96,24 +96,24 @@ for root, dirs, files in os.walk(base_directory):
         step_y = 100
 
         # generate x and y values
-        x_values = np.arange(min_x, max_x, 100)
-        y_values = np.arange(min_y, max_y, 100)
+        x_values = np.arange(min_x, max_x, 1) #100
+        y_values = np.arange(min_y, max_y, 1) #100
 
         # split data into mhcii and pd1tcf
         data_mhcii = data_in[data_in['Predictions'] == 30]
         data_pd1tcf = data_in[data_in['Predictions'] == 50]
 
-        data_mhcii.drop('Predictions', axis=1, inplace=True)
-        data_pd1tcf.drop('Predictions', axis=1, inplace=True)
+        # data_mhcii.drop('Predictions', axis=1, inplace=True)
+        # data_pd1tcf.drop('Predictions', axis=1, inplace=True)
         
         # Merge the two DataFrames on 'x' and 'y'
         data_plot3 = pd.merge(data_mhcii, data_pd1tcf, on=['Centroid.X.µm', 'Centroid.Y.µm'], how='inner')
         
         # create plot
         ax2.scatter(data_plot3['Centroid.X.µm'], data_plot3['Centroid.Y.µm']*(-1), s=4/100, marker='.') #c=colors_plot3
-        ax2.set_xlabel("Centroid X µm", fontsize=10)
+        ax2.set_xlabel("Centroid X mm", fontsize=10)
         ax2.set_xticklabels(ax2.get_xticklabels(), fontsize=4, va='center')
-        ax2.set_ylabel("Centroid Y µm", fontsize=10)
+        ax2.set_ylabel("Centroid Y mm", fontsize=10)
         ax2.set_yticklabels(ax2.get_yticklabels(), rotation=90, fontsize=4, va='center')
         ax2.legend(handles=[plt.Line2D([], [], color='blue', marker='o', label='Immune Niches')], fontsize=8)
         ax2.set_box_aspect(1)
@@ -127,6 +127,23 @@ for root, dirs, files in os.walk(base_directory):
         total_area = ((total_max_x - total_min_x) * (total_max_y - total_min_y))  // 10000  # convert to mm^2
         total_count = data.shape[0]
         
+        # all cells
+        data_all = data
+        # delete columns
+        data_all.drop('Nucleus..Opal.570.mean', axis=1, inplace=True)
+        data_all.drop('Nucleus..Opal.690.mean', axis=1, inplace=True)
+        data_all.drop('Nucleus..Opal.480.mean', axis=1, inplace=True)
+        data_all.drop('Nucleus..Opal.620.mean', axis=1, inplace=True)
+        data_all.drop('Nucleus..Opal.520.mean', axis=1, inplace=True)
+
+        # round to nearest 100 nanometers -> mm
+        data_all['Centroid.X.µm'] = data_in['Centroid.X.µm'] // 100 * 1 #100
+        data_all['Centroid.Y.µm'] = data_in['Centroid.Y.µm'] // 100 * 1 #100
+        
+        # delete duplicates
+        data_all = data_all.drop_duplicates()
+        single_cells_total = data_all.shape[0]
+       
         #  cd8 = 10
         data_cd8 = pd.concat([data[data['Predictions'] == 10],data[data['Predictions'] == 40],data[data['Predictions'] == 50],data[data['Predictions'] == 60]],ignore_index=True)
         cd8_max_x = data['Centroid.X.µm'].max() 
@@ -204,6 +221,12 @@ for root, dirs, files in os.walk(base_directory):
         pd1tcf_mm2 = pd1tcf_count / pd1tcf_area
         pd1tcf_DAPI = pd1tcf_count / total_count
 
+        # niche proportion
+        data_plot3 = data_plot3.drop_duplicates()
+        single_cells_niche = data_plot3.shape[0]
+        nicheproportion = single_cells_niche / single_cells_total
+        nicheproportion_percentage = nicheproportion * 100
+
         # build numbers table to download
         numbers_table = pd.DataFrame({
             'Sample': [sample_title],
@@ -234,7 +257,9 @@ for root, dirs, files in os.walk(base_directory):
             'PD1TCF area': [pd1tcf_area],
             'PD1TCF count': [pd1tcf_count],
             'PD1TCF per mm2': [pd1tcf_mm2],
-            'PDTCF per DAPI': [pd1tcf_DAPI]})
+            'PDTCF per DAPI': [pd1tcf_DAPI],
+            'Niche Proportion': [nicheproportion],
+            'Niche Percent': [nicheproportion_percentage]})
         
         numbers_table.to_csv(f"./numbers/{sample_title}_numbers.csv", index=False)
 
@@ -265,9 +290,6 @@ for root, dirs, files in os.walk(base_directory):
         plt.show()
 
         plt.close()
-
-        # exit()
-
 
 
 
