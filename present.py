@@ -5,9 +5,13 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import warnings
 
+# general
 warnings.filterwarnings("ignore") # only warnings show for xticlables and yticklabels, but have not effect except for filling up terminal window
 
+all_numbers_table = pd.DataFrame()
+
 base_directory = "./predictions"
+
 # Using os.walk
 for root, dirs, files in os.walk(base_directory):
     for file in files:
@@ -19,7 +23,7 @@ for root, dirs, files in os.walk(base_directory):
         sample_title = file_path.split('/')[-1].split('_predictions')[0]
         sample_title = 'Sample ' + sample_title
     
-        types = {10,20,30,40,50,60}
+        # types 
         # 10 = CD8
         # 20 = CD4
         # 30 = mhcII
@@ -271,6 +275,8 @@ for root, dirs, files in os.walk(base_directory):
         
         numbers_table.to_csv(f"./numbers/{sample_title}_numbers.csv", index=False)
 
+        all_numbers_table = pd.concat([all_numbers_table, numbers_table])
+
         # build numbers table to display
         numbers_table_ax3 = numbers_table[numbers_table.columns[1:17]]
         numbers_table_ax4 = numbers_table[numbers_table.columns[17:34]] #up by 2 once niche fields added
@@ -299,5 +305,5 @@ for root, dirs, files in os.walk(base_directory):
 
         plt.close()
 
-
-
+# save all numbers to file
+all_numbers_table.to_csv(f"./numbers/all_numbers.csv", index=False)
