@@ -65,40 +65,40 @@ Results of all selected machine learning models based upon limited feature set:
 * Decision Tree: Mean Cross-Validation Accuracy = 0.8306
 ### 2.5.6 High Level Model Description
 **Random Forests**  
-_ _Description:_ _ An ensemble method that combines multiple decision trees to improve accuracy and reduce overfitting. Each tree is trained on a random subset of the data and features.  
-_ _Strengths:_ _ Robust, handles high-dimensional data, and reduces overfitting compared to single decision trees.  
-_ _Weaknesses:_ _ Less interpretable than individual decision trees, computationally expensive for large datasets.  
-_ _Applications:_ _ Predicting disease progression, identifying biomarkers.  
+_Description:_ An ensemble method that combines multiple decision trees to improve accuracy and reduce overfitting. Each tree is trained on a random subset of the data and features.  
+_Strengths:_ Robust, handles high-dimensional data, and reduces overfitting compared to single decision trees.  
+_Weaknesses:_ Less interpretable than individual decision trees, computationally expensive for large datasets.  
+_Applications:_ Predicting disease progression, identifying biomarkers.  
 
 **Gradient Boosting Machines (GBM)**  
-_ _Description:_ _ An ensemble technique that builds models sequentially, with each new model correcting errors made by the previous ones. Common implementations include XGBoost, LightGBM, and CatBoost.  
-_ _Strengths:_ _ High accuracy, handles heterogeneous data, and robust to outliers.  
-_ _Weaknesses:_ _ Computationally expensive, prone to overfitting if not tuned properly.  
-_ _Applications:_ _ Predicting patient readmission rates, risk stratification.  
+_Description:_ An ensemble technique that builds models sequentially, with each new model correcting errors made by the previous ones. Common implementations include XGBoost, LightGBM, and CatBoost.  
+_Strengths:_ High accuracy, handles heterogeneous data, and robust to outliers.  
+_Weaknesses:_ Computationally expensive, prone to overfitting if not tuned properly.  
+_Applications:_ Predicting patient readmission rates, risk stratification.  
 
 **Logistic Regression**  
-_ _Description:_ _ A supervised learning algorithm used for binary classification problems. It predicts the probability of an outcome using a logistic function.  
-_ _Strengths:_ _ Easy to implement, provides probabilistic interpretations.  
-_ _Weaknesses:_ _ Limited to linear decision boundaries and may underperform on non-linear data.  
-_ _Applications:_ _ Disease diagnosis (e.g., predicting presence or absence of a disease).  
+_Description:_ A supervised learning algorithm used for binary classification problems. It predicts the probability of an outcome using a logistic function.  
+_Strengths:_ Easy to implement, provides probabilistic interpretations.  
+_Weaknesses:_ Limited to linear decision boundaries and may underperform on non-linear data.  
+_Applications:_ Disease diagnosis (e.g., predicting presence or absence of a disease).  
 
 **Support Vector Machines (SVM)**  
-_ _Description:_ _ A supervised learning algorithm used for classification and regression. It finds the optimal hyperplane that separates data points of different classes with the maximum margin.  
-_ _Strengths:_ _ Effective in high-dimensional spaces, versatile with kernel functions for non-linear data.  
-_ _Weaknesses:_ _ Computationally intensive, requires careful tuning of hyperparameters.  
-_ _Applications:_ _ Classifying medical images, predicting patient outcomes.  
+_Description:_ A supervised learning algorithm used for classification and regression. It finds the optimal hyperplane that separates data points of different classes with the maximum margin.  
+_Strengths:_ Effective in high-dimensional spaces, versatile with kernel functions for non-linear data.  
+_Weaknesses:_ Computationally intensive, requires careful tuning of hyperparameters.  
+_Applications:_ Classifying medical images, predicting patient outcomes.  
 
 **K-Nearest Neighbors (KNN)**  
-_ _Description:_ _ A non-parametric, instance-based learning algorithm that classifies data points based on the majority class of their k-nearest neighbors in the feature space.  
-_ _Strengths:_ _ Simple, no training phase, and adapts easily to new data.  
-_ _Weaknesses:_ _ Computationally expensive for large datasets, sensitive to irrelevant features.  
-_ _Applications:_ _ Patient clustering, disease classification.  
+_Description:_ A non-parametric, instance-based learning algorithm that classifies data points based on the majority class of their k-nearest neighbors in the feature space.  
+_Strengths:_ Simple, no training phase, and adapts easily to new data.  
+_Weaknesses:_ Computationally expensive for large datasets, sensitive to irrelevant features.  
+_Applications:_ Patient clustering, disease classification.  
 
 **Decision Trees**  
-_ _Description:_ _ A tree-like model that splits data into subsets based on feature values. Each internal node represents a decision based on a feature, and each leaf node represents an outcome.  
-_ _Strengths:_ _ Easy to interpret, handles non-linear relationships, and requires minimal data preprocessing.  
-_ _Weaknesses:_ _ Prone to overfitting, especially with deep trees.  
-_ _Applications:_ _ Classifying patient risk levels, predicting treatment outcomes.  
+_Description:_ A tree-like model that splits data into subsets based on feature values. Each internal node represents a decision based on a feature, and each leaf node represents an outcome.  
+_Strengths:_ Easy to interpret, handles non-linear relationships, and requires minimal data preprocessing.  
+_Weaknesses:_ Prone to overfitting, especially with deep trees.  
+_Applications:_ Classifying patient risk levels, predicting treatment outcomes.  
 ### 2.6 Prediction
 
 Objective: Use the selected model to make predictions on new or unseen data.
