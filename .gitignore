@@ -3,3 +3,5 @@
 *.jpeg
 *.png
 test*.*
+*DS_Store*
+*.DS_Store
