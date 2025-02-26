@@ -64,36 +64,36 @@ Results of all selected machine learning models based upon limited feature set:
 * KNN: Mean Cross-Validation Accuracy = 0.8374
 * Decision Tree: Mean Cross-Validation Accuracy = 0.8306
 ### 2.5.6 High Level Model Description
-**Random Forests**
-__Description:__ An ensemble method that combines multiple decision trees to improve accuracy and reduce overfitting. Each tree is trained on a random subset of the data and features.
-__Strengths:__ Robust, handles high-dimensional data, and reduces overfitting compared to single decision trees.
-__Weaknesses:__ Less interpretable than individual decision trees, computationally expensive for large datasets.
-__Applications:__ Predicting disease progression, identifying biomarkers.
-**Gradient Boosting Machines (GBM)**
-__Description:__ An ensemble technique that builds models sequentially, with each new model correcting errors made by the previous ones. Common implementations include XGBoost, LightGBM, and CatBoost.
-__Strengths:__ High accuracy, handles heterogeneous data, and robust to outliers.
-__Weaknesses:__ Computationally expensive, prone to overfitting if not tuned properly.
-__Applications:__ Predicting patient readmission rates, risk stratification.
-**Logistic Regression**
-__Description:__ A supervised learning algorithm used for binary classification problems. It predicts the probability of an outcome using a logistic function.
-__Strengths:__ Easy to implement, provides probabilistic interpretations.
-__Weaknesses:__ Limited to linear decision boundaries and may underperform on non-linear data.
-__Applications:__ Disease diagnosis (e.g., predicting presence or absence of a disease).
-**Support Vector Machines (SVM)**
-__Description:__ A supervised learning algorithm used for classification and regression. It finds the optimal hyperplane that separates data points of different classes with the maximum margin.
-__Strengths:__ Effective in high-dimensional spaces, versatile with kernel functions for non-linear data.
-__Weaknesses:__ Computationally intensive, requires careful tuning of hyperparameters.
-__Applications:__ Classifying medical images, predicting patient outcomes.
-**K-Nearest Neighbors (KNN)**
-__Description:__ A non-parametric, instance-based learning algorithm that classifies data points based on the majority class of their k-nearest neighbors in the feature space.
-__Strengths:__ Simple, no training phase, and adapts easily to new data.
-__Weaknesses:__ Computationally expensive for large datasets, sensitive to irrelevant features.
-__Applications:__ Patient clustering, disease classification.
-**Decision Trees**
-__Description:__ A tree-like model that splits data into subsets based on feature values. Each internal node represents a decision based on a feature, and each leaf node represents an outcome.
-__Strengths:__ Easy to interpret, handles non-linear relationships, and requires minimal data preprocessing.
-__Weaknesses:__ Prone to overfitting, especially with deep trees.
-__Applications:__ Classifying patient risk levels, predicting treatment outcomes.
+**Random Forests**  
+__Description:__ An ensemble method that combines multiple decision trees to improve accuracy and reduce overfitting. Each tree is trained on a random subset of the data and features.  
+__Strengths:__ Robust, handles high-dimensional data, and reduces overfitting compared to single decision trees.  
+__Weaknesses:__ Less interpretable than individual decision trees, computationally expensive for large datasets.  
+__Applications:__ Predicting disease progression, identifying biomarkers.  
+**Gradient Boosting Machines (GBM)**  
+__Description:__ An ensemble technique that builds models sequentially, with each new model correcting errors made by the previous ones. Common implementations include XGBoost, LightGBM, and CatBoost.  
+__Strengths:__ High accuracy, handles heterogeneous data, and robust to outliers.  
+__Weaknesses:__ Computationally expensive, prone to overfitting if not tuned properly.  
+__Applications:__ Predicting patient readmission rates, risk stratification.  
+**Logistic Regression**  
+__Description:__ A supervised learning algorithm used for binary classification problems. It predicts the probability of an outcome using a logistic function.  
+__Strengths:__ Easy to implement, provides probabilistic interpretations.  
+__Weaknesses:__ Limited to linear decision boundaries and may underperform on non-linear data.  
+__Applications:__ Disease diagnosis (e.g., predicting presence or absence of a disease).  
+**Support Vector Machines (SVM)**  
+__Description:__ A supervised learning algorithm used for classification and regression. It finds the optimal hyperplane that separates data points of different classes with the maximum margin.  
+__Strengths:__ Effective in high-dimensional spaces, versatile with kernel functions for non-linear data.  
+__Weaknesses:__ Computationally intensive, requires careful tuning of hyperparameters.  
+__Applications:__ Classifying medical images, predicting patient outcomes.  
+**K-Nearest Neighbors (KNN)**  
+__Description:__ A non-parametric, instance-based learning algorithm that classifies data points based on the majority class of their k-nearest neighbors in the feature space.  
+__Strengths:__ Simple, no training phase, and adapts easily to new data.  
+__Weaknesses:__ Computationally expensive for large datasets, sensitive to irrelevant features.  
+__Applications:__ Patient clustering, disease classification.  
+**Decision Trees**  
+__Description:__ A tree-like model that splits data into subsets based on feature values. Each internal node represents a decision based on a feature, and each leaf node represents an outcome.  
+__Strengths:__ Easy to interpret, handles non-linear relationships, and requires minimal data preprocessing.  
+__Weaknesses:__ Prone to overfitting, especially with deep trees.  
+__Applications:__ Classifying patient risk levels, predicting treatment outcomes.  
 ### 2.6 Prediction
 
 Objective: Use the selected model to make predictions on new or unseen data.
