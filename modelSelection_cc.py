@@ -22,56 +22,42 @@ from sklearn.pipeline import Pipeline
 import joblib  # For saving the model
 
 # Load the training datasets
-cd8_53904_1 = pd.read_csv('data/53904_1/53904_1cd8cells.csv',usecols=[8,9,22,28,34,40,52])
-cd4_53904_1 = pd.read_csv('data/53904_1/53904_1cd4cells.csv',usecols=[8,9,22,28,34,40,52])
-mhcII_53904_1 = pd.read_csv('data/53904_1/53904_1mhccells.csv',usecols=[8,9,22,28,34,40,52])
-pd1_53904_1 = pd.read_csv('data/53904_1/53904_1pd1cells.csv',usecols=[8,9,22,28,34,40,52])
-pd1tcf_53904_1 = pd.read_csv('data/53904_1/53904_1pd1tcfcells.csv',usecols=[8,9,22,28,34,40,52])
-tcf_53904_1 = pd.read_csv('data/53904_1/53904_1tcfcells.csv',usecols=[8,9,22,28,34,40,52])
+cd8_CC01_PreNivo = pd.read_csv('data/CC01_PreNivo/CC01_PreNivocd8cells.csv',usecols=[8,9,22,28,34,40,52])
+cd4_CC01_PreNivo = pd.read_csv('data/CC01_PreNivo/CC01_PreNivocd4cells.csv',usecols=[8,9,22,28,34,40,52])
+mhcII_CC01_PreNivo = pd.read_csv('data/CC01_PreNivo/CC01_PreNivomhccells.csv',usecols=[8,9,22,28,34,40,52])
+pd1_CC01_PreNivo = pd.read_csv('data/CC01_PreNivo/CC01_PreNivopd1cells.csv',usecols=[8,9,22,28,34,40,52])
+pd1tcf_CC01_PreNivo = pd.read_csv('data/CC01_PreNivo/CC01_PreNivopd1tcfcells.csv',usecols=[8,9,22,28,34,40,52])
+tcf_CC01_PreNivo = pd.read_csv('data/CC01_PreNivo/CC01_PreNivotcfcells.csv',usecols=[8,9,22,28,34,40,52])
 
-cd8_33683_1 = pd.read_csv('data/33683_1/33683_1cd8cells.csv',usecols=[8,9,22,28,34,40,52])
-cd4_33683_1 = pd.read_csv('data/33683_1/33683_1cd4cells.csv',usecols=[8,9,22,28,34,40,52])
-mhcII_33683_1 = pd.read_csv('data/33683_1/33683_1mhccells.csv',usecols=[8,9,22,28,34,40,52])
-pd1_33683_1 = pd.read_csv('data/33683_1/33683_1pd1cells.csv',usecols=[8,9,22,28,34,40,52])
-pd1tcf_33683_1 = pd.read_csv('data/33683_1/33683_1pd1tcfcells.csv',usecols=[8,9,22,28,34,40,52])
-tcf_33683_1 = pd.read_csv('data/33683_1/33683_1tcfcells.csv',usecols=[8,9,22,28,34,40,52])
-
-cd8_33270_2 = pd.read_csv('data/33270_2/33270_2cd8cells.csv',usecols=[8,9,22,28,34,40,52])
-cd4_33270_2 = pd.read_csv('data/33270_2/33270_2cd4cells.csv',usecols=[8,9,22,28,34,40,52])
-mhcII_33270_2 = pd.read_csv('data/33270_2/33270_2mhccells.csv',usecols=[8,9,22,28,34,40,52])
-pd1_33270_2 = pd.read_csv('data/33270_2/33270_2pd1cells.csv',usecols=[8,9,22,28,34,40,52])
-pd1tcf_33270_2 = pd.read_csv('data/33270_2/33270_2pd1tcfcells.csv',usecols=[8,9,22,28,34,40,52])
-tcf_33270_2 = pd.read_csv('data/33270_2/33270_2tcfcells.csv',usecols=[8,9,22,28,34,40,52])
+cd8_CC09_PreNivo = pd.read_csv('data/CC09_PreNivo/CC09_PreNivocd8cells.csv',usecols=[8,9,22,28,34,40,52])
+cd4_CC09_PreNivo = pd.read_csv('data/CC09_PreNivo/CC09_PreNivocd4cells.csv',usecols=[8,9,22,28,34,40,52])
+mhcII_CC09_PreNivo = pd.read_csv('data/CC09_PreNivo/CC09_PreNivomhccells.csv',usecols=[8,9,22,28,34,40,52])
+pd1_CC09_PreNivo = pd.read_csv('data/CC09_PreNivo/CC09_PreNivopd1cells.csv',usecols=[8,9,22,28,34,40,52])
+pd1tcf_CC09_PreNivo = pd.read_csv('data/CC09_PreNivo/CC09_PreNivopd1tcfcells.csv',usecols=[8,9,22,28,34,40,52])
+tcf_CC09_PreNivo = pd.read_csv('data/CC09_PreNivo/CC09_PreNivotcfcells.csv',usecols=[8,9,22,28,34,40,52])
 
 print("Model data loaded")
 
 # add cell class column
-cd8_53904_1['cellclass'] = 10
-cd4_53904_1['cellclass'] = 20
-mhcII_53904_1['cellclass'] = 30
-pd1_53904_1['cellclass'] = 40
-pd1tcf_53904_1['cellclass'] = 50
-tcf_53904_1['cellclass'] = 60
+cd8_CC01_PreNivo['cellclass'] = 10
+cd4_CC01_PreNivo['cellclass'] = 20
+mhcII_CC01_PreNivo['cellclass'] = 30
+pd1_CC01_PreNivo['cellclass'] = 40
+pd1tcf_CC01_PreNivo['cellclass'] = 50
+tcf_CC01_PreNivo['cellclass'] = 60
 
-cd8_33683_1['cellclass'] = 10
-cd4_33683_1['cellclass'] = 20
-mhcII_33683_1['cellclass'] = 30
-pd1_33683_1['cellclass'] = 40
-pd1tcf_33683_1['cellclass'] = 50
-tcf_33683_1['cellclass'] = 60
-
-cd8_33270_2['cellclass'] = 10
-cd4_33270_2['cellclass'] = 20
-mhcII_33270_2['cellclass'] = 30
-pd1_33270_2['cellclass'] = 40
-pd1tcf_33270_2['cellclass'] = 50
-tcf_33270_2['cellclass'] = 60
+cd8_CC09_PreNivo['cellclass'] = 10
+cd4_CC09_PreNivo['cellclass'] = 20
+mhcII_CC09_PreNivo['cellclass'] = 30
+pd1_CC09_PreNivo['cellclass'] = 40
+pd1tcf_CC09_PreNivo['cellclass'] = 50
+tcf_CC09_PreNivo['cellclass'] = 60
 
 # concatenate all the dataframes
-frames = [cd8_53904_1,cd4_53904_1,mhcII_53904_1,pd1_53904_1,pd1tcf_53904_1,tcf_53904_1, 
-          cd8_33683_1,cd4_33683_1,mhcII_33683_1,pd1_33683_1,pd1tcf_33683_1,tcf_33683_1,
-          cd8_33270_2,cd4_33270_2,mhcII_33270_2,pd1_33270_2,pd1tcf_33270_2,tcf_33270_2]
+frames = [cd8_CC01_PreNivo,cd4_CC01_PreNivo,mhcII_CC01_PreNivo,pd1_CC01_PreNivo,pd1tcf_CC01_PreNivo,tcf_CC01_PreNivo] 
+        #   cd8_CC09_PreNivo,cd4_CC09_PreNivo,mhcII_CC09_PreNivo,pd1_CC09_PreNivo,pd1tcf_CC09_PreNivo,tcf_CC09_PreNivo]
 data = pd.concat(frames)
+print(data.head())
 data.sample(frac=1,ignore_index=True) #shuffle the data
 
 # Assuming the last column is the target variable and the rest are features
@@ -176,62 +162,10 @@ y_pred = best_pipeline.predict(X_test)
 test_accuracy = accuracy_score(y_test, y_pred)
 print(f"Test Accuracy with {best_model}: {test_accuracy:.4f}")
 
-#############################################################
-# Results based upon CD8, CD4, MHCII data sets
-
-# Random Forest: Mean Cross-Validation Accuracy = 0.9529
-# Gradient Boosting: Mean Cross-Validation Accuracy = 0.9653
-# Logistic Regression: Mean Cross-Validation Accuracy = 0.7983
-# SVM: Mean Cross-Validation Accuracy = 0.8185
-# KNN: Mean Cross-Validation Accuracy = 0.9521
-# Decision Tree: Mean Cross-Validation Accuracy = 0.9499
-
-# Best Model: Gradient Boosting with Accuracy: 0.9653
-
-#############################################################
-# Results based upon CD8, CD4, MHCII, PD1, PD1TCF, TCF data sets
-
-# Random Forest: Mean Cross-Validation Accuracy = 0.6953
-# Gradient Boosting: Mean Cross-Validation Accuracy = 0.7793
-# Logistic Regression: Mean Cross-Validation Accuracy = 0.6341
-# SVM: Mean Cross-Validation Accuracy = 0.6698
-# KNN: Mean Cross-Validation Accuracy = 0.7276
-# Decision Tree: Mean Cross-Validation Accuracy = 0.6924
-
-# Best Model: Gradient Boosting with Accuracy: 0.7793
-# Test Accuracy with Gradient Boosting: 0.7807
-
-#############################################################
-# Results based upon CD8, CD4, MHCII, PD1, PD1TCF, TCF data sets with enhanced data cleanup classification - TCF removed
-
-# Random Forest: Mean Cross-Validation Accuracy = 0.9514
-# Gradient Boosting: Mean Cross-Validation Accuracy = 0.9610
-# Logistic Regression: Mean Cross-Validation Accuracy = 0.7424
-# SVM: Mean Cross-Validation Accuracy = 0.7849
-# KNN: Mean Cross-Validation Accuracy = 0.9224
-# Decision Tree: Mean Cross-Validation Accuracy = 0.9460
-
-# Best Model: Gradient Boosting with Accuracy: 0.9610
-# Test Accuracy with Gradient Boosting: 0.9607
-
-#############################################################
-# Results based upon CD8, CD4, MHCII, PD1, PD1TCF, TCF data sets with enhanced data cleanup classification
-
-# Random Forest: Mean Cross-Validation Accuracy = 0.8349
-# Gradient Boosting: Mean Cross-Validation Accuracy = 0.8859
-# Logistic Regression: Mean Cross-Validation Accuracy = 0.6854
-# SVM: Mean Cross-Validation Accuracy = 0.7332
-# KNN: Mean Cross-Validation Accuracy = 0.8374
-# Decision Tree: Mean Cross-Validation Accuracy = 0.8306
-
-# Best Model: Gradient Boosting with Accuracy: 0.8859
-# Test Accuracy with Gradient Boosting: 0.8859
-
-#############################################################
 
 # Save the best model to a file
-model_filename = 'best_model.pkl'
-# joblib.dump(best_pipeline, model_filename)
-# print(f"Best model saved to {model_filename}")
+model_filename = 'best_model_cc.pkl'
+joblib.dump(best_pipeline, model_filename)
+print(f"Best model saved to {model_filename}")
 
 # Best model saved to best_model.pkl

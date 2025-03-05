@@ -2,33 +2,36 @@ import os
 import pandas as pd
 
 # Base directory to start the search
-file_name = './data/CC09_PreNivo/CC09_PreNivo.csv'
+base_file_name = './data/53904_1/53904_1pd1cells.csv'
+files = {
+    './data/CC09_PreNivo/CC09_PreNivocd4cells.csv',
+    './data/CC09_PreNivo/CC09_PreNivocd8cells.csv',
+    './data/CC09_PreNivo/CC09_PreNivomhccells.csv',
+    './data/CC09_PreNivo/CC09_PreNivotcfcells.csv',
+    './data/CC09_PreNivo/CC09_PreNivopd1cells.csv',
+    './data/CC09_PreNivo/CC09_PreNivopd1tcfcells.csv',
+    }
+base_file = pd.read_csv(base_file_name)
+base_headers = base_file.columns.tolist()
+print(base_headers)
 
- # Check if the file exists
-if os.path.isfile(file_name):
-            
-    try:
-        # Read the CSV file
-        data = pd.read_csv(file_name)
-        print('preprocessing')
-        headers = data.columns.tolist()
-        print(headers)       
-        # search string ' (C2) ' to be removed
-        search_string = ' (C2) '
-        new_headers = {col: col.replace(search_string, ' ') for col in data.columns}
-        # Rename the columns
-        data.rename(columns=new_headers, inplace=True)
-        print('post C2 processing')
-        headers = data.columns.tolist()
-        print(headers)    
-        # search string ' (C4) ' to be removed
-        search_string = ' (C4) '
-        new_headers = {col: col.replace(search_string, ' ') for col in data.columns}
-        # Rename the columns
-        data.rename(columns=new_headers, inplace=True)
-        print('post C4 processing')
-        headers = data.columns.tolist()
-        print(headers)
-        data.to_csv(file_name, index=False)
-    except Exception as e:
-        print(f"Error reading file {file_name}: {e}")
+# Loop through the files
+for file_name in files:
+    print("\n")
+    print(f"Processing file {file_name}")
+    # Check if the file exists
+    if os.path.isfile(file_name):
+                
+        try:
+            # Read the CSV file
+            data = pd.read_csv(file_name)
+            data.columns = base_headers    
+            print('post processing')
+            print(data.columns.tolist())
+            print("\n")
+            data.to_csv(file_name, index=False)
+        except Exception as e:
+            print(f"Error reading file {file_name}: {e}")
+        print("\n")
+
+ 

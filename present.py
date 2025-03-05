@@ -45,8 +45,9 @@ for root, dirs, files in os.walk(base_directory):
             filtered_60 = data[(data['Predictions'] == 60)]
 
             # datasets
-            data_plot1 = pd.concat([filtered_10,filtered_40,filtered_50,filtered_60])
-            data_plot1['Predictions'] = data_plot1['Predictions'].replace(60, 10) #replace tcf with cd8
+            # data_plot1 = pd.concat([filtered_10,filtered_40,filtered_50,filtered_60])
+            data_plot1 = pd.concat([filtered_40,filtered_50])
+            # data_plot1['Predictions'] = data_plot1['Predictions'].replace(60, 10) #replace tcf with cd8
 
             data_plot2 = pd.concat([filtered_30])
 
@@ -69,18 +70,18 @@ for root, dirs, files in os.walk(base_directory):
             ax4 = fig.add_subplot(gs[2, :])
 
             ############### plot 1 ####################################################################################################################
-            ax0.scatter(data_plot1['Centroid.X.µm'], data_plot1['Centroid.Y.µm']*(-1), s=4/100, c=colors_plot1, marker='.')
+            ax0.scatter(data_plot1['Centroid.X.µm'], data_plot1['Centroid.Y.µm']*(-1), s=4/100, c=colors_plot1, marker=',')
             ax0.set_xlabel("Centroid X µm", fontsize=10)
             ax0.set_xticklabels(ax0.get_xticklabels(), fontsize=4, va='center')
             ax0.set_ylabel("Centroid Y µm", fontsize=10)
             ax0.set_yticklabels(ax0.get_yticklabels(), rotation=90, fontsize=4, va='center')
-            ax0.legend(handles=[plt.Line2D([], [], color='gray', marker='o', label='CD8+ Cells'),
-                                plt.Line2D([], [], color='red', marker='o', label='CD8+PD1+TCF- Cells'),
+            # ax0.legend(handles=[plt.Line2D([], [], color='gray', marker='o', label='CD8+ Cells'),
+            ax0.legend(handles=[plt.Line2D([], [], color='red', marker='o', label='CD8+PD1+TCF- Cells'),
                                 plt.Line2D([], [], color='#39FF14', marker='o', label='CD8+PD1+TCF+ Cells')],
                                 fontsize=8)
             ax0.set_box_aspect(1)
             ############### plot 2 ####################################################################################################################
-            ax1.scatter(data_plot2['Centroid.X.µm'], data_plot2['Centroid.Y.µm']*(-1), s=4/100,c=colors_plot2, marker='.')
+            ax1.scatter(data_plot2['Centroid.X.µm'], data_plot2['Centroid.Y.µm']*(-1), s=12/100,c=colors_plot2, marker=',')
             ax1.set_xlabel("Centroid X µm", fontsize=10)
             ax1.set_xticklabels(ax1.get_xticklabels(), fontsize=4, va='center')
             ax1.set_ylabel("Centroid Y µm", fontsize=10)
@@ -125,7 +126,7 @@ for root, dirs, files in os.walk(base_directory):
             data_plot3 = pd.merge(data_mhcii, data_pd1tcf, on=['Centroid.X.µm', 'Centroid.Y.µm'], how='inner')
             
             # create plot
-            ax2.scatter(data_plot3['Centroid.X.µm'], data_plot3['Centroid.Y.µm']*(-1), s=4/100, marker='.') #c=colors_plot3
+            ax2.scatter(data_plot3['Centroid.X.µm'], data_plot3['Centroid.Y.µm']*(-1), s=12/100, marker=',') #c=colors_plot3
             ax2.set_xlabel("Centroid X mm", fontsize=10)
             ax2.set_xticklabels(ax2.get_xticklabels(), fontsize=4, va='center')
             ax2.set_ylabel("Centroid Y mm", fontsize=10)
