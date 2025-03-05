@@ -58,37 +58,37 @@ Models were trained on 80% of the data and tested on 20% of the data.
 Based upon the statistical accuracy for each machine learning model with the underlying data sets, the _Stacking Classifier_ machine learning model presents the highest mean cross-validation accuracy (**88.43%**).
 Results of all selected machine learning models based upon limited feature set:
 * **Linear Models**
-- Logistic Regression: Mean Cross-Validation Accuracy = 0.6447
-- Linear Discriminant Analysis (LDA): Mean Cross-Validation Accuracy = 0.6075
-- Ridge Classifier: Mean Cross-Validation Accuracy = 0.6134
-- Stochastic Gradient Descent (SGD): Mean Cross-Validation Accuracy = 0.6546
+  - Logistic Regression: Mean Cross-Validation Accuracy = 0.6447
+  - Linear Discriminant Analysis (LDA): Mean Cross-Validation Accuracy = 0.6075
+  - Ridge Classifier: Mean Cross-Validation Accuracy = 0.6134
+  - Stochastic Gradient Descent (SGD): Mean Cross-Validation Accuracy = 0.6546
 * **Tree-Based Models**
-- Decision Tree: Mean Cross-Validation Accuracy = 0.8034
-- Random Forest: Mean Cross-Validation Accuracy = 0.8084
-- Gradient Boosting: Mean Cross-Validation Accuracy = 0.8647
-- LightGBM: Mean Cross-Validation Accuracy = 0.8347
-- Extra Trees: Mean Cross-Validation Accuracy = 0.8035
+  - Decision Tree: Mean Cross-Validation Accuracy = 0.8034
+  - Random Forest: Mean Cross-Validation Accuracy = 0.8084
+  - Gradient Boosting: Mean Cross-Validation Accuracy = 0.8647
+  - LightGBM: Mean Cross-Validation Accuracy = 0.8347
+  - Extra Trees: Mean Cross-Validation Accuracy = 0.8035
 * **Support Vector Machines**
-- SVC: Mean Cross-Validation Accuracy = 0.8507
-- Linear SVC: Mean Cross-Validation Accuracy = 0.6549
+  - SVC: Mean Cross-Validation Accuracy = 0.8507
+  - Linear SVC: Mean Cross-Validation Accuracy = 0.6549
 * **Nearest Neighbors**
-- K-Nearest Neighbors (KNN): Mean Cross-Validation Accuracy = 0.8117
+  - K-Nearest Neighbors (KNN): Mean Cross-Validation Accuracy = 0.8117
 * **Neural Networks**
-- Multi-Layer Perceptron (MLP): Mean Cross-Validation Accuracy = 0.8588
+  - Multi-Layer Perceptron (MLP): Mean Cross-Validation Accuracy = 0.8588
 * **Ensemble Methods**
-- AdaBoost: Mean Cross-Validation Accuracy = 0.5366
-- Bagging: Mean Cross-Validation Accuracy = 0.8083
-- Voting Classifier: Mean Cross-Validation Accuracy = 0.8212
-- Stacking Classifier: Mean Cross-Validation Accuracy = 0.8843
+  - AdaBoost: Mean Cross-Validation Accuracy = 0.5366
+  - Bagging: Mean Cross-Validation Accuracy = 0.8083
+  - Voting Classifier: Mean Cross-Validation Accuracy = 0.8212
+  - Stacking Classifier: Mean Cross-Validation Accuracy = 0.8843
 * **Probabilistic Models**
-- Gaussian Naive Bayes: Mean Cross-Validation Accuracy = 0.5245
-- Bernoulli Naive Bayes: Mean Cross-Validation Accuracy = 0.6390
+  - Gaussian Naive Bayes: Mean Cross-Validation Accuracy = 0.5245
+  - Bernoulli Naive Bayes: Mean Cross-Validation Accuracy = 0.6390
 * **Clustering-Based Models**
-- K-Means: Mean Cross-Validation Accuracy = 0.0000
-- Gaussian Mixture Model (GMM): Mean Cross-Validation Accuracy = 0.0000
+  - K-Means: Mean Cross-Validation Accuracy = 0.0000
+  - Gaussian Mixture Model (GMM): Mean Cross-Validation Accuracy = 0.0000
 * **Other Models**
-- Quadratic Discriminant Analysis (QDA): Mean Cross-Validation Accuracy = 0.6737
-- Partial Least Squares (PLS): Mean Cross-Validation Accuracy = nan
+  - Quadratic Discriminant Analysis (QDA): Mean Cross-Validation Accuracy = 0.6737
+  - Partial Least Squares (PLS): Mean Cross-Validation Accuracy = nan
 
 Best Model: Stacking Classifier with Accuracy: 0.8843
 
