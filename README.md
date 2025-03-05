@@ -57,11 +57,11 @@ Models were trained on 80% of the data and tested on 20% of the data.
 ### 2.5.5 Results
 Based upon the statistical accuracy for each machine learning model with the underlying data sets, the _Stacking Classifier_ machine learning model presents the highest mean cross-validation accuracy (**88.43%**).
 Results of all selected machine learning models based upon limited feature set:
-- **Linear Models**
-* Logistic Regression: Mean Cross-Validation Accuracy = 0.6447
-* Linear Discriminant Analysis (LDA): Mean Cross-Validation Accuracy = 0.6075
-* Ridge Classifier: Mean Cross-Validation Accuracy = 0.6134
-* Stochastic Gradient Descent (SGD): Mean Cross-Validation Accuracy = 0.6546
+* **Linear Models**
+- Logistic Regression: Mean Cross-Validation Accuracy = 0.6447
+- Linear Discriminant Analysis (LDA): Mean Cross-Validation Accuracy = 0.6075
+- Ridge Classifier: Mean Cross-Validation Accuracy = 0.6134
+- Stochastic Gradient Descent (SGD): Mean Cross-Validation Accuracy = 0.6546
 - **Tree-Based Models**
 * Decision Tree: Mean Cross-Validation Accuracy = 0.8034
 * Random Forest: Mean Cross-Validation Accuracy = 0.8084
