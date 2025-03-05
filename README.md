@@ -55,50 +55,138 @@ The evaluation was done based upon all features (139), but in line with previous
 ### 2.5.4 Training / Testing
 Models were trained on 80% of the data and tested on 20% of the data.
 ### 2.5.5 Results
-Based upon the statistical accuracy for each machine learning model with the underlying data sets, the --Gradient Boosting-- machine learning model presents the highest mean cross-validation accuracy (**88.59%**).
+Based upon the statistical accuracy for each machine learning model with the underlying data sets, the _Stacking Classifier_ machine learning model presents the highest mean cross-validation accuracy (**88.43%**).
 Results of all selected machine learning models based upon limited feature set:
-* Random Forest: Mean Cross-Validation Accuracy = 0.8349
-* Gradient Boosting: Mean Cross-Validation Accuracy = 0.8859
-* Logistic Regression: Mean Cross-Validation Accuracy = 0.6854
-* SVM: Mean Cross-Validation Accuracy = 0.7332
-* KNN: Mean Cross-Validation Accuracy = 0.8374
-* Decision Tree: Mean Cross-Validation Accuracy = 0.8306
+- Linear Models
+* Logistic Regression: Mean Cross-Validation Accuracy = 0.6447
+* Linear Discriminant Analysis (LDA): Mean Cross-Validation Accuracy = 0.6075
+* Ridge Classifier: Mean Cross-Validation Accuracy = 0.6134
+* Stochastic Gradient Descent (SGD): Mean Cross-Validation Accuracy = 0.6546
+- Tree-Based Models
+* Decision Tree: Mean Cross-Validation Accuracy = 0.8034
+* Random Forest: Mean Cross-Validation Accuracy = 0.8084
+* Gradient Boosting: Mean Cross-Validation Accuracy = 0.8647
+* LightGBM: Mean Cross-Validation Accuracy = 0.8347
+* Extra Trees: Mean Cross-Validation Accuracy = 0.8035
+- Support Vector Machines
+* SVC: Mean Cross-Validation Accuracy = 0.8507
+* Linear SVC: Mean Cross-Validation Accuracy = 0.6549
+- Nearest Neighbors
+* K-Nearest Neighbors (KNN): Mean Cross-Validation Accuracy = 0.8117
+- Neural Networks
+* Multi-Layer Perceptron (MLP): Mean Cross-Validation Accuracy = 0.8588
+- Ensemble Methods
+* AdaBoost: Mean Cross-Validation Accuracy = 0.5366
+* Bagging: Mean Cross-Validation Accuracy = 0.8083
+* Voting Classifier: Mean Cross-Validation Accuracy = 0.8212
+* Stacking Classifier: Mean Cross-Validation Accuracy = 0.8843
+- Probabilistic Models
+* Gaussian Naive Bayes: Mean Cross-Validation Accuracy = 0.5245
+* Bernoulli Naive Bayes: Mean Cross-Validation Accuracy = 0.6390
+- Clustering-Based Models
+* K-Means: Mean Cross-Validation Accuracy = 0.0000
+* Gaussian Mixture Model (GMM): Mean Cross-Validation Accuracy = 0.0000
+- Other Models
+* Quadratic Discriminant Analysis (QDA): Mean Cross-Validation Accuracy = 0.6737
+* Partial Least Squares (PLS): Mean Cross-Validation Accuracy = nan
+
+Best Model: Stacking Classifier with Accuracy: 0.8843
+
+The Stacking Classifier was modeled with LogisticRegression, RandomForestClassifier, SVC. Other combinations with higher individual outcomes were tested, but did not provide a better outcome.
+
 ### 2.5.6 High Level Model Description
-**Random Forests**  
-_Description:_ An ensemble method that combines multiple decision trees to improve accuracy and reduce overfitting. Each tree is trained on a random subset of the data and features.  
-_Strengths:_ Robust, handles high-dimensional data, and reduces overfitting compared to single decision trees.  
-_Weaknesses:_ Less interpretable than individual decision trees, computationally expensive for large datasets.  
-_Applications:_ Predicting disease progression, identifying biomarkers.  
-
-**Gradient Boosting Machines (GBM)**  
-_Description:_ An ensemble technique that builds models sequentially, with each new model correcting errors made by the previous ones. Common implementations include XGBoost, LightGBM, and CatBoost.  
-_Strengths:_ High accuracy, handles heterogeneous data, and robust to outliers.  
-_Weaknesses:_ Computationally expensive, prone to overfitting if not tuned properly.  
-_Applications:_ Predicting patient readmission rates, risk stratification.  
-
-**Logistic Regression**  
-_Description:_ A supervised learning algorithm used for binary classification problems. It predicts the probability of an outcome using a logistic function.  
-_Strengths:_ Easy to implement, provides probabilistic interpretations.  
-_Weaknesses:_ Limited to linear decision boundaries and may underperform on non-linear data.  
-_Applications:_ Disease diagnosis (e.g., predicting presence or absence of a disease).  
-
-**Support Vector Machines (SVM)**  
-_Description:_ A supervised learning algorithm used for classification and regression. It finds the optimal hyperplane that separates data points of different classes with the maximum margin.  
-_Strengths:_ Effective in high-dimensional spaces, versatile with kernel functions for non-linear data.  
-_Weaknesses:_ Computationally intensive, requires careful tuning of hyperparameters.  
-_Applications:_ Classifying medical images, predicting patient outcomes.  
-
-**K-Nearest Neighbors (KNN)**  
-_Description:_ A non-parametric, instance-based learning algorithm that classifies data points based on the majority class of their k-nearest neighbors in the feature space.  
-_Strengths:_ Simple, no training phase, and adapts easily to new data.  
-_Weaknesses:_ Computationally expensive for large datasets, sensitive to irrelevant features.  
-_Applications:_ Patient clustering, disease classification.  
-
-**Decision Trees**  
-_Description:_ A tree-like model that splits data into subsets based on feature values. Each internal node represents a decision based on a feature, and each leaf node represents an outcome.  
-_Strengths:_ Easy to interpret, handles non-linear relationships, and requires minimal data preprocessing.  
-_Weaknesses:_ Prone to overfitting, especially with deep trees.  
-_Applications:_ Classifying patient risk levels, predicting treatment outcomes.  
+**Logistic Regression**
+_Description:_ Models the probability of a binary or multi-class outcome using a logistic function.
+_Weaknesses:_ Assumes linear decision boundaries; struggles with non-linear data.
+_Applications:_ Spam detection, disease diagnosis, credit scoring.
+**Linear Discriminant Analysis (LDA)**
+_Description:_ Finds a linear combination of features to separate classes, assuming Gaussian distributions.
+_Weaknesses:_ Sensitive to outliers; assumes equal class covariances.
+_Applications:_ Face recognition, medical diagnosis, marketing.
+**Ridge Classifier**
+_Description:_ Classification with L2 regularization to prevent overfitting.
+_Weaknesses:_ Requires tuning of the regularization parameter; not ideal for non-linear data.
+_Applications:_ Text classification, small datasets with many features.
+**Stochastic Gradient Descent (SGD)**
+_Description:_ Optimizes models incrementally using small data batches.
+_Weaknesses:_ Sensitive to learning rate; may converge to local minima.
+_Applications:_ Large-scale learning, online learning, deep learning.
+**Decision Tree**
+_Description:_ Splits data into branches based on feature values to make predictions.
+_Weaknesses:_ Prone to overfitting; unstable with small data changes.
+_Applications:_ Customer segmentation, fraud detection, medical diagnosis.
+**Random Forest**
+_Description:_ Ensemble of decision trees to reduce overfitting and improve accuracy.
+_Weaknesses:_ Computationally expensive; less interpretable than single trees.
+_Applications:_ Predictive modeling, feature importance analysis, anomaly detection.
+**Gradient Boosting**
+_Description:_ Sequentially builds trees to correct errors from previous trees.
+_Weaknesses:_ Computationally intensive; sensitive to noisy data.
+_Applications:_ Kaggle competitions, financial forecasting, ranking.
+**LightGBM**
+_Description:_ Gradient boosting framework optimized for speed and efficiency.
+_Weaknesses:_ May overfit on small datasets; requires careful hyperparameter tuning.
+_Applications:_ Click-through rate prediction, high-performance tasks.
+**Extra Trees (Extremely Randomized Trees)**
+_Description:_ Randomizes feature selection and split points to reduce variance.
+_Weaknesses:_ Less interpretable; may underfit with too much randomization.
+_Applications:_ Similar to Random Forest but faster and less prone to overfitting.
+**SVC (Support Vector Classification)**
+_Description:_ Finds the optimal hyperplane to separate classes, with kernel support.
+_Weaknesses:_ Computationally expensive for large datasets; requires tuning.
+_Applications:_ Image classification, bioinformatics, text classification.
+**Linear SVC**
+_Description:_ Optimized SVM for linear decision boundaries.
+_Weaknesses:_ Limited to linear relationships; sensitive to scaling.
+_Applications:_ Text classification, large datasets.
+**K-Nearest Neighbors (KNN)**
+_Description:_ Predicts based on the majority class or average of the nearest neighbors.
+_Weaknesses:_ Computationally expensive for large datasets; sensitive to irrelevant features.
+_Applications:_ Recommendation systems, anomaly detection, image recognition.
+**Multi-Layer Perceptron (MLP)**
+_Description:_ Neural network with one or more hidden layers for non-linear modeling.
+_Weaknesses:_ Requires large data; prone to overfitting; hard to interpret.
+_Applications:_ Image recognition, natural language processing, time-series forecasting.
+**AdaBoost**
+_Description:_ Combines weak classifiers by focusing on misclassified samples.
+_Weaknesses:_ Sensitive to noisy data; may overfit.
+_Applications:_ Face detection, customer churn prediction, fraud detection.
+**Bagging**
+_Description:_ Trains multiple models on bootstrapped samples and averages predictions.
+_Weaknesses:_ Computationally expensive; less effective for simple models.
+_Applications:_ Improving stability of decision trees, regression models.
+**Voting Classifier**
+_Description:_ Combines predictions from multiple models using hard or soft voting.
+_Weaknesses:_ Requires diverse models; computationally expensive.
+_Applications:_ Improving accuracy by leveraging diverse models.
+**Stacking Classifier**
+_Description:_ Uses a meta-model to combine predictions from base models.
+_Weaknesses:_ Complex to implement; requires careful tuning.
+_Applications:_ Competitions, complex datasets.
+**Gaussian Naive Bayes**
+_Description:_ Assumes features are conditionally independent and follow a Gaussian distribution.
+_Weaknesses:_ Struggles with correlated features; oversimplifies data.
+_Applications:_ Text classification, spam filtering, sentiment analysis.
+**Bernoulli Naive Bayes**
+_Description:_ Assumes binary features (e.g., presence/absence of words).
+_Weaknesses:_ Limited to binary data; oversimplifies relationships.
+_Applications:_ Document classification, sentiment analysis.
+**K-Means**
+_Description:_ Partitions data into K clusters by minimizing variance.
+_Weaknesses:_ Sensitive to initialization; assumes spherical clusters.
+_Applications:_ Customer segmentation, image compression, anomaly detection.
+**Gaussian Mixture Model (GMM)**
+_Description:_ Models data as a mixture of Gaussian distributions for soft clustering.
+_Weaknesses:_ Computationally expensive; sensitive to initialization.
+_Applications:_ Anomaly detection, speech recognition, image segmentation.
+**Quadratic Discriminant Analysis (QDA)**
+_Description:_ Similar to LDA but allows for non-linear decision boundaries.
+_Weaknesses:_ Requires more data; prone to overfitting with many features.
+_Applications:_ When class covariances are significantly different.
+**Partial Least Squares (PLS)**
+_Description:_ Finds latent variables explaining variance in predictors and response.
+_Weaknesses:_ Hard to interpret; requires careful tuning.
+_Applications:_ Chemometrics, bioinformatics, financial modeling.
 ### 2.6 Prediction
 
 Objective: Use the selected model to make predictions on new or unseen data.
