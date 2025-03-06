@@ -4,5 +4,6 @@
 *.png
 test*.*
 *DS_Store*
+*DS_Store*.*
 *.DS_Store
 best_model*.*
