@@ -161,7 +161,32 @@ y_pred = best_pipeline.predict(X_test)
 # Evaluate the best model on the test set
 test_accuracy = accuracy_score(y_test, y_pred)
 print(f"Test Accuracy with {best_model}: {test_accuracy:.4f}")
+# Logistic Regression: Mean Cross-Validation Accuracy = 0.8040
+# Linear Discriminant Analysis (LDA): Mean Cross-Validation Accuracy = 0.6860
+# Ridge Classifier: Mean Cross-Validation Accuracy = 0.6871
+# Stochastic Gradient Descent (SGD): Mean Cross-Validation Accuracy = 0.7769
+# Decision Tree: Mean Cross-Validation Accuracy = 0.7445
+# Random Forest: Mean Cross-Validation Accuracy = 0.7451
+# Gradient Boosting: Mean Cross-Validation Accuracy = 0.8279
+# LightGBM: Mean Cross-Validation Accuracy = 0.7799
+# Extra Trees: Mean Cross-Validation Accuracy = 0.7413
+# SVC: Mean Cross-Validation Accuracy = 0.8327
+# Linear SVC: Mean Cross-Validation Accuracy = 0.7699
+# K-Nearest Neighbors (KNN): Mean Cross-Validation Accuracy = 0.7585
+# Multi-Layer Perceptron (MLP): Mean Cross-Validation Accuracy = 0.8412
+# AdaBoost: Mean Cross-Validation Accuracy = 0.8266
+# Bagging: Mean Cross-Validation Accuracy = 0.7461
+# Voting Classifier: Mean Cross-Validation Accuracy = 0.8160
+# Stacking Classifier: Mean Cross-Validation Accuracy = 0.8802
+# Gaussian Naive Bayes: Mean Cross-Validation Accuracy = 0.7572
+# Multinomial Naive Bayes failed
+# Bernoulli Naive Bayes: Mean Cross-Validation Accuracy = 0.6826
+# K-Means: Mean Cross-Validation Accuracy = 0.0000
+# Gaussian Mixture Model (GMM): Mean Cross-Validation Accuracy = 0.0000
+# Quadratic Discriminant Analysis (QDA): Mean Cross-Validation Accuracy = 0.7643
+# Partial Least Squares (PLS): Mean Cross-Validation Accuracy = nan
 
+# Best Model: Stacking Classifier with Accuracy: 0.8802
 
 # Save the best model to a file
 model_filename = 'best_model_cc.pkl'

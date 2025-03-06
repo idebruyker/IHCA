@@ -22,8 +22,54 @@ The end-to-end process to classify and present cell components through statistic
 * Presentation: Communicate results effectively.
 
 ### 2.1 Data Collection
+Raw data was collected using QUPath with raw detections showing location on an X and Y axis and Opal stains intensities. The training data was then processed using previously used anaylisis on R studio and compared to QuPath Analysis for accuracy.
 
 ### 2.2 Data Cleanup
+1. Data Preparation Script
+
+File: data_prep.py
+
+This script performs the following tasks:
+* Imports necessary libraries (pandas and os).
+* Sets a base directory for data files.
+* Reads two CSV files (30810_2a.csv and 30810_2b.csv) from the specified directory.
+Concatenates the two dataframes column-wise.
+Saves the concatenated dataframe to a new CSV file (30810_2.csv).
+Usage:
+
+
+Run the script to generate the combined CSV file.
+2. Data Header Standardization Script
+
+File: standardize_headers.py
+
+This script standardizes the headers of multiple CSV files to match those of a base file. It performs the following tasks:
+
+Imports necessary libraries (pandas and os).
+Defines a base file and a set of files to be processed.
+Reads the base file to extract column headers.
+Iterates over the list of files, reads each file, and updates its headers to match the base file.
+Saves the updated files back to their original locations.
+Usage:
+
+Ensure all specified CSV files exist in their respective directories.
+Run the script to standardize the headers of the listed files.
+3. Training Data Preparation Script
+
+File: training_data_prep.py
+
+This script prepares training data by processing multiple CSV files related to different cell types. It performs the following tasks:
+
+Imports the pandas library.
+Reads multiple CSV files for different cell types from specified directories.
+Prints the original row counts for each cell type.
+Removes rows from certain dataframes based on Object.ID matches with other dataframes.
+Prints the updated row counts after processing.
+Saves the processed dataframes back to their original CSV files.
+Usage:
+
+Ensure all specified CSV files exist in their respective directories.
+Run the script to process and update the training data files.
 
 ### 2.3 Data Classification
 
@@ -35,14 +81,43 @@ Three random cell data sets were selected for modeling:
 * 53904_1
 * 33683_1
 * 33270_2
+For CC Samples data sets were chosen: the data sets with the most entries were selected
+* CC01_PreNivo
+* CC09_PreNivo
 #### 2.5.2 Machine Learning Models
 The following machine learning models were evaluated:
-* Random Forest
-* Gradient Boosting
-* Logistic Regression
-* SVM
-* KNN
-* Decision Tree
+* * **Linear Models**
+  - Logistic Regression
+  - Linear Discriminant Analysis (LDA)
+  - Ridge Classifier
+  - Stochastic Gradient Descent (SGD)
+* **Tree-Based Models**
+  - Decision Tree
+  - Random Forest
+  - Gradient Boosting
+  - LightGBM
+  - Extra Trees
+* **Support Vector Machines**
+  - SVC
+  - Linear SVC
+* **Nearest Neighbors**
+  - K-Nearest Neighbors (KNN)
+* **Neural Networks**
+  - Multi-Layer Perceptron (MLP)
+* **Ensemble Methods**
+  - AdaBoost
+  - Bagging
+  - Voting Classifier
+  - Stacking Classifier
+* **Probabilistic Models**
+  - Gaussian Naive Bayes
+  - Bernoulli Naive Bayes
+* **Clustering-Based Models**
+  - K-Means
+  - Gaussian Mixture Model (GMM)
+* **Other Models**
+  - Quadratic Discriminant Analysis (QDA)
+  - Partial Least Squares (PLS)
 ### 2.5.3 Features
 The evaluation was done based upon all features (139), but in line with previous data analysis, limited incremental benefit was achieved by chosing all features versus a limited set. The retained features are:
 * Centroid.X.µm
@@ -56,39 +131,32 @@ The evaluation was done based upon all features (139), but in line with previous
 Models were trained on 80% of the data and tested on 20% of the data.
 ### 2.5.5 Results
 Based upon the statistical accuracy for each machine learning model with the underlying data sets, the _Stacking Classifier_ machine learning model presents the highest mean cross-validation accuracy (**88.43%**).
-Results of all selected machine learning models based upon limited feature set:
-* **Linear Models**
-  - Logistic Regression: Mean Cross-Validation Accuracy = 0.6447
-  - Linear Discriminant Analysis (LDA): Mean Cross-Validation Accuracy = 0.6075
-  - Ridge Classifier: Mean Cross-Validation Accuracy = 0.6134
-  - Stochastic Gradient Descent (SGD): Mean Cross-Validation Accuracy = 0.6546
-* **Tree-Based Models**
-  - Decision Tree: Mean Cross-Validation Accuracy = 0.8034
-  - Random Forest: Mean Cross-Validation Accuracy = 0.8084
-  - Gradient Boosting: Mean Cross-Validation Accuracy = 0.8647
-  - LightGBM: Mean Cross-Validation Accuracy = 0.8347
-  - Extra Trees: Mean Cross-Validation Accuracy = 0.8035
-* **Support Vector Machines**
-  - SVC: Mean Cross-Validation Accuracy = 0.8507
-  - Linear SVC: Mean Cross-Validation Accuracy = 0.6549
-* **Nearest Neighbors**
-  - K-Nearest Neighbors (KNN): Mean Cross-Validation Accuracy = 0.8117
-* **Neural Networks**
-  - Multi-Layer Perceptron (MLP): Mean Cross-Validation Accuracy = 0.8588
-* **Ensemble Methods**
-  - AdaBoost: Mean Cross-Validation Accuracy = 0.5366
-  - Bagging: Mean Cross-Validation Accuracy = 0.8083
-  - Voting Classifier: Mean Cross-Validation Accuracy = 0.8212
-  - Stacking Classifier: Mean Cross-Validation Accuracy = 0.8843
-* **Probabilistic Models**
-  - Gaussian Naive Bayes: Mean Cross-Validation Accuracy = 0.5245
-  - Bernoulli Naive Bayes: Mean Cross-Validation Accuracy = 0.6390
-* **Clustering-Based Models**
-  - K-Means: Mean Cross-Validation Accuracy = 0.0000
-  - Gaussian Mixture Model (GMM): Mean Cross-Validation Accuracy = 0.0000
-* **Other Models**
-  - Quadratic Discriminant Analysis (QDA): Mean Cross-Validation Accuracy = 0.6737
-  - Partial Least Squares (PLS): Mean Cross-Validation Accuracy = nan
+Results of all selected machine learning (ML) models based upon limited feature set with corresponding Mean Cross-Validation Accuracy:
+| ML Model | Mean Cross-Validation Accuracy | 
+|:-------------|:--------------:|
+| Logistic Regression| 0.6447 |
+| Linear Discriminant Analysis (LDA)| 0.6075 |
+| Ridge Classifier| 0.6134 |
+| Stochastic Gradient Descent (SGD)| 0.6546 |
+| Decision Tree| 0.8034 |
+| Random Forest| 0.8084 |
+| Gradient Boosting| 0.8647 |
+| LightGBM| 0.8347 |
+| Extra Trees| 0.8035 |
+| SVC| 0.8507 |
+| Linear SVC| 0.6549 |
+| K-Nearest Neighbors (KNN)| 0.8117 |
+| Multi-Layer Perceptron (MLP)| 0.8588 |
+| AdaBoost| 0.5366 |
+| Bagging| 0.8083 |
+| Voting Classifier| 0.8212 |
+| Stacking Classifier| 0.8843 |
+| Gaussian Naive Bayes| 0.5245 |
+| Bernoulli Naive Bayes| 0.6390 |
+| K-Means| 0.0000 |
+| Gaussian Mixture Model (GMM)| 0.0000 |
+| Quadratic Discriminant Analysis (QDA)| 0.6737 |
+| Partial Least Squares (PLS)| nan |
 
 Best Model: Stacking Classifier with Accuracy: 0.8843
 
