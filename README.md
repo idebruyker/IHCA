@@ -118,6 +118,8 @@ The following machine learning models were evaluated:
 * **Other Models**
   - Quadratic Discriminant Analysis (QDA)
   - Partial Least Squares (PLS)
+
+Next to models above, torch and paddle were also reviewed.
 ### 2.5.3 Features
 The evaluation was done based upon all features (139), but in line with previous data analysis, limited incremental benefit was achieved by chosing all features versus a limited set. The retained features are:
 * Centroid.X.µm
