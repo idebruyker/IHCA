@@ -271,7 +271,7 @@ Outcome: Predictions for the given input data.
 The results are charted highlighting:
 * scatter of CD8+PD1+TCF- Cells and CD8+PD1+TCF+ Cells
 * scatter of MHC II+ cells
-* scatter of Immune Niches
+* scatter of Immune Niche
 * table with area, count, density count per mm2, DAPI for each cell type and niche proportion and percentage:
   * CD8
   * MHCII
