@@ -268,13 +268,17 @@ Outcome: Predictions for the given input data.
 
 ### 2.7 Presentation
 
-Objective: Communicate the results and insights effectively to stakeholders.
-Steps:
-Visualize Results: Create charts, graphs, and dashboards to present predictions and insights.
-Generate Reports: Summarize the process, findings, and recommendations in a report or presentation.
-Explain Model Decisions: Use techniques like SHAP or LIME to explain model predictions (if applicable).
-Interactive Demos: Build interactive tools or dashboards (e.g., using Streamlit, Dash, or Power BI).
-Outcome: Clear, actionable insights and predictions presented to stakeholders.
+The results are charted highlighting:
+* scatter of CD8+PD1+TCF- Cells and CD8+PD1+TCF+ Cells
+* scatter of MHC II+ cells
+* scatter of Immune Niches
+* table with area, count, density count per mm2, DAPI for each cell type and niche proportion and percentage:
+  * CD8
+  * MHCII
+  * CD4
+  * TCF
+  * PD1
+  * PD1TCF
 
 ## Contributors
 Isabelle De Bruyker, BS Biomedical Engineering, Georgia Institute of Technology
